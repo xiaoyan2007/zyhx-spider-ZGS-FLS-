@@ -6,6 +6,14 @@ import time
 import random
 import tkinter as tk
 from tkinter import ttk, messagebox
+import sys
+import os
+
+# ===================== 自动获取图标路径 =====================
+def get_icon_path():
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, "logo.ico")
+    return "logo.ico"
 
 # ===================== 爬虫配置：随机UA防拦截 =====================
 UA_LIST = [
@@ -126,7 +134,7 @@ def start_crawl(key, start, end, pages, clean_enabled, log_box):
     log(log_box, "✅ 全部完成！已保存 outline.txt 和 contents.txt")
     messagebox.showinfo("完成", "爬取完毕！")
 
-# ===================== 免责声明弹窗（核心新增） =====================
+# ===================== 免责声明弹窗 =====================
 def show_legal_disclaimer():
     root = tk.Tk()
     root.withdraw()
@@ -169,6 +177,11 @@ def show_legal_disclaimer():
     win.geometry("650x430")
     win.protocol("WM_DELETE_WINDOW", lambda: exit())
 
+    try:
+        win.iconbitmap(get_icon_path())
+    except:
+        pass
+
     tk.Label(win, text="⚠️  法律免责声明", font=("微软雅黑", 14, "bold"), fg="red").pack(pady=8)
     text_box = tk.Text(win, width=80, height=18)
     text_box.pack(padx=15)
@@ -190,6 +203,12 @@ def open_link(event):
 def run_gui():
     window = tk.Tk()
     window.title("智宇慧轩爬虫 Beta 0.2")
+
+    try:
+        window.iconbitmap(get_icon_path())
+    except:
+        pass
+
     window.geometry("900x480")
 
     tip_frame = tk.Frame(window)
